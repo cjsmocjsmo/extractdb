@@ -19,9 +19,9 @@ fn main() {
     let mut rows = stmt.query([]).unwrap();
     let mut old_img_path_vec = Vec::new();
     while let Some(row) = rows.next().unwrap() {
-        let imgid: String = row.get(0).unwrap();
-        let imghash: String = row.get(1).unwrap();
-        let imgpath: String = row.get(2).unwrap();
+        let imgid: String = row.get(1).unwrap();
+        let imghash: String = row.get(2).unwrap();
+        let imgpath: String = row.get(3).unwrap();
         let meta = types::Meta {
             imgid: imgid,
             imghash: imghash,
