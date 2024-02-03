@@ -8,7 +8,7 @@ pub struct Meta {
     pub imgpath: String,
 }
 
-// #[derive(Clone, Debug)]
-// pub struct ImgHashStruct {
-//     pub hash: ImageHash,
-// }
+#[derive(Clone, Debug)]
+pub struct ImgHashStruct {
+    pub imghash: String,
+}
