@@ -15,8 +15,8 @@ fn main() {
     // let apath = &args[1];
     let db_path = env::var("DUPS_DB").expect("DUPS_DB not set");
     let conn = rusqlite::Connection::open(db_path).expect("Unable to open database");
-    let mut stmt = conn.prepare("SELECT * FROM jpgs;").unwrap();
-    let mut rows = stmt.query([]).unwrap();
+    let mut stmt_jpg = conn.prepare("SELECT * FROM jpgs;").unwrap();
+    let mut rows = stmt_jpg.query([]).unwrap();
     let mut old_img_path_vec = Vec::new();
     while let Some(row) = rows.next().unwrap() {
         let imgid: String = row.get(1).unwrap();
@@ -28,7 +28,35 @@ fn main() {
             imgpath: imgpath,
         };
         old_img_path_vec.push(meta);
-    }
+    };
+
+    let mut stmt_png = conn.prepare("SELECT * FROM pngs;").unwrap();
+    let mut rows = stmt_png.query([]).unwrap();
+    while let Some(row) = rows.next().unwrap() {
+        let imgid: String = row.get(1).unwrap();
+        let imghash: String = row.get(2).unwrap();
+        let imgpath: String = row.get(3).unwrap();
+        let meta = types::Meta {
+            imgid: imgid,
+            imghash: imghash,
+            imgpath: imgpath,
+        };
+        old_img_path_vec.push(meta);
+    };
+
+    let mut stmt_bmp = conn.prepare("SELECT * FROM bmps;").unwrap();
+    let mut rows = stmt_bmp.query([]).unwrap();
+    while let Some(row) = rows.next().unwrap() {
+        let imgid: String = row.get(1).unwrap();
+        let imghash: String = row.get(2).unwrap();
+        let imgpath: String = row.get(3).unwrap();
+        let meta = types::Meta {
+            imgid: imgid,
+            imghash: imghash,
+            imgpath: imgpath,
+        };
+        old_img_path_vec.push(meta);
+    };
 
     let jpg_out = env::var("DEDUPS_JPG").expect("DEDUPS_JPG not set");
     fs::create_dir_all(jpg_out.clone()).expect("Unable to create JPG directory");
