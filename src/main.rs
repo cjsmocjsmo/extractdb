@@ -39,6 +39,7 @@ fn main() {
 
     for e in old_img_path_vec {
         // let old_path = e.path().to_string_lossy().to_string();
+        println!("old_path: {}", e.imgpath);
         let old_path = e.imgpath;
         let fname = split_fname(old_path.clone());
         let ext = split_ext(old_path.clone());
