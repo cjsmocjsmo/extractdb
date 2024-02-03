@@ -19,7 +19,7 @@ fn main() {
     let mut stmt_jpg = conn.prepare("SELECT DISTINCT imghash FROM jpgs;").unwrap();
     let mut rows = stmt_jpg.query([]).unwrap();
     while let Some(row) = rows.next().unwrap() {
-        let imghash1: String = row.get(1).unwrap();
+        let imghash1: String = row.get(0).unwrap();
         
         img_hash_vec.push(imghash1);
     };
